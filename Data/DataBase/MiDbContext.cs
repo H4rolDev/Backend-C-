@@ -92,9 +92,9 @@ namespace Data.DataBase
                 .WithOne()
                 .HasForeignKey(u => u.cliente_id)
                 .IsRequired();
-            
-            // Venta -> TipoEntrega | 
 
+            // Venta -> TipoEntrega | 
+            
             // Cliente -> Venta | uno a muchos
             modelBuilder.Entity<Cliente>()
                 .HasMany<Venta>()
@@ -122,7 +122,7 @@ namespace Data.DataBase
                 .WithOne()
                 .HasForeignKey(u => u.metodoPago_id)
                 .IsRequired();
-            
+
             // TipoPago -> MetodoPago | uno a muchos 
             modelBuilder.Entity<TipoPago>()
                 .HasMany<MetodoPago>()
@@ -157,6 +157,15 @@ namespace Data.DataBase
                 .WithOne()
                 .HasForeignKey(u => u.empleadoTecnico_id)
                 .IsRequired();
+
+            // Cliente -> User | uno a uno 
+            modelBuilder.Entity<User>()
+                .HasOne<Cliente>()
+                .WithOne()
+                .HasForeignKey<Cliente>(u => u.user_id)
+                .IsRequired(false);
+            /* un nuevo cliente sin un usuario, puedes simplemente dejar el campo UserId sin asignar (será null).
+            Si en el futuro decides asociar un cliente a un usuario, puedes actualizar el valor del campo UserId con el ID del usuario correspondiente. */
         }
 
         public DbSet<Categoria> categorias { get; set; }
@@ -177,5 +186,6 @@ namespace Data.DataBase
         public DbSet<TipoPago> tipoPagos { get; set; }
         public DbSet<Vendedor> vendedores { get; set; }
         public DbSet<Venta> ventas { get; set; }
+        public DbSet<User> users { get; set; }
     }
 }

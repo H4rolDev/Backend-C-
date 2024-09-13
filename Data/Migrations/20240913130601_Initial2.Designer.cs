@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(MiDbContext))]
-    [Migration("20240907063259_Initial")]
-    partial class Initial
+    [Migration("20240913130601_Initial2")]
+    partial class Initial2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,7 +107,14 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("user_id")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
+
+                    b.HasIndex("user_id")
+                        .IsUnique()
+                        .HasFilter("[user_id] IS NOT NULL");
 
                     b.ToTable("clientes");
                 });
@@ -427,11 +434,7 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("Imagen")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("categoria_id")
-                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.Property<string>("descripcion")
@@ -441,6 +444,9 @@ namespace Data.Migrations
 
                     b.Property<int?>("garantia")
                         .HasColumnType("int");
+
+                    b.Property<string>("imagen")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("marca")
                         .IsRequired()
@@ -497,6 +503,17 @@ namespace Data.Migrations
                             modelo = "ReDragon",
                             precio = 98.50m,
                             stock = 10
+                        },
+                        new
+                        {
+                            id = 4,
+                            categoria_id = 2,
+                            descripcion = "Un mouse muy bueno para gamers",
+                            garantia = 2,
+                            marca = "DS132-32",
+                            modelo = "Ryzen",
+                            precio = 170.50m,
+                            stock = 30
                         });
                 });
 
@@ -630,6 +647,32 @@ namespace Data.Migrations
                     b.ToTable("tipoPago");
                 });
 
+            modelBuilder.Entity("Data.DataBase.Tables.User", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("users");
+                });
+
             modelBuilder.Entity("Data.DataBase.Tables.Vendedor", b =>
                 {
                     b.Property<int>("id")
@@ -712,6 +755,13 @@ namespace Data.Migrations
                     b.HasIndex("vendedor_id");
 
                     b.ToTable("ventas");
+                });
+
+            modelBuilder.Entity("Data.DataBase.Tables.Cliente", b =>
+                {
+                    b.HasOne("Data.DataBase.Tables.User", null)
+                        .WithOne()
+                        .HasForeignKey("Data.DataBase.Tables.Cliente", "user_id");
                 });
 
             modelBuilder.Entity("Data.DataBase.Tables.Delivery", b =>

@@ -54,10 +54,19 @@ namespace Data.DataBase.Seeds
                     precio = 98.50m,
                     stock = 10,
                     garantia = 2
-                }
+                },
+                new Producto
+                {
+                    id = 4,
+                    categoria_id = 2,
+                    descripcion = "Un mouse muy bueno para gamers",
+                    modelo = "Ryzen",
+                    marca = "DS132-32",
+                    precio = 170.50m,
+                    stock = 30,
+                    garantia = 2
+                }   
             );
-
-
         }
     }
 }

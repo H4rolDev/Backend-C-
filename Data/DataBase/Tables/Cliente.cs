@@ -28,5 +28,6 @@ namespace Data.DataBase.Tables
         [StringLength(50)]
         [EmailAddress]
         public string correo { get; set; }
+        public int? user_id { get; set; }
     }
 }

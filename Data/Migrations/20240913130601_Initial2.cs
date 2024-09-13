@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Initial2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,23 +24,6 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_categorias", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "clientes",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    apellidoPaterno = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    apellidoMaterno = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    telefono = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    correo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_clientes", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,6 +113,21 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "users",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_users", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "vendedores",
                 columns: table => new
                 {
@@ -153,8 +151,8 @@ namespace Data.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    categoria_id = table.Column<int>(type: "int", maxLength: 50, nullable: false),
-                    Imagen = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    categoria_id = table.Column<int>(type: "int", nullable: false),
+                    imagen = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     descripcion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     modelo = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     marca = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
@@ -169,28 +167,6 @@ namespace Data.Migrations
                         name: "FK_productos_categorias_categoria_id",
                         column: x => x.categoria_id,
                         principalTable: "categorias",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ordenServicioTecnico",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    horaInicio = table.Column<TimeSpan>(type: "time", nullable: false),
-                    horaFin = table.Column<TimeSpan>(type: "time", nullable: false),
-                    cliente_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ordenServicioTecnico", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_ordenServicioTecnico_clientes_cliente_id",
-                        column: x => x.cliente_id,
-                        principalTable: "clientes",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -215,33 +191,6 @@ namespace Data.Migrations
                         name: "FK_detalleCompra_proveedores_proveedor_id",
                         column: x => x.proveedor_id,
                         principalTable: "proveedores",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "documentos",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    numeroDocumento = table.Column<int>(type: "int", nullable: false),
-                    tipoDocumento_id = table.Column<int>(type: "int", nullable: false),
-                    cliente_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_documentos", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_documentos_clientes_cliente_id",
-                        column: x => x.cliente_id,
-                        principalTable: "clientes",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_documentos_tipoDocumentos_tipoDocumento_id",
-                        column: x => x.tipoDocumento_id,
-                        principalTable: "tipoDocumentos",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -275,6 +224,99 @@ namespace Data.Migrations
                         name: "FK_delivery_tipoEntrega_tipoEntrega_id",
                         column: x => x.tipoEntrega_id,
                         principalTable: "tipoEntrega",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "metodoPago",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    telefono = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    tipoPago_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_metodoPago", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_metodoPago_tipoPago_tipoPago_id",
+                        column: x => x.tipoPago_id,
+                        principalTable: "tipoPago",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "clientes",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    apellidoPaterno = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    apellidoMaterno = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    telefono = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    correo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    user_id = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_clientes", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_clientes_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "users",
+                        principalColumn: "id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "documentos",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    numeroDocumento = table.Column<int>(type: "int", nullable: false),
+                    tipoDocumento_id = table.Column<int>(type: "int", nullable: false),
+                    cliente_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_documentos", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_documentos_clientes_cliente_id",
+                        column: x => x.cliente_id,
+                        principalTable: "clientes",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_documentos_tipoDocumentos_tipoDocumento_id",
+                        column: x => x.tipoDocumento_id,
+                        principalTable: "tipoDocumentos",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ordenServicioTecnico",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    horaInicio = table.Column<TimeSpan>(type: "time", nullable: false),
+                    horaFin = table.Column<TimeSpan>(type: "time", nullable: false),
+                    cliente_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ordenServicioTecnico", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_ordenServicioTecnico_clientes_cliente_id",
+                        column: x => x.cliente_id,
+                        principalTable: "clientes",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -315,53 +357,6 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "metodoPago",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    telefono = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    tipoPago_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_metodoPago", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_metodoPago_tipoPago_tipoPago_id",
-                        column: x => x.tipoPago_id,
-                        principalTable: "tipoPago",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "detalleTrabajo",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ordenServicioTecnico_id = table.Column<int>(type: "int", nullable: false),
-                    empleadoTecnico_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_detalleTrabajo", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_detalleTrabajo_empleadoTecnico_empleadoTecnico_id",
-                        column: x => x.empleadoTecnico_id,
-                        principalTable: "empleadoTecnico",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_detalleTrabajo_ordenServicioTecnico_ordenServicioTecnico_id",
-                        column: x => x.ordenServicioTecnico_id,
-                        principalTable: "ordenServicioTecnico",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ventas",
                 columns: table => new
                 {
@@ -394,6 +389,32 @@ namespace Data.Migrations
                         name: "FK_ventas_vendedores_vendedor_id",
                         column: x => x.vendedor_id,
                         principalTable: "vendedores",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "detalleTrabajo",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ordenServicioTecnico_id = table.Column<int>(type: "int", nullable: false),
+                    empleadoTecnico_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_detalleTrabajo", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_detalleTrabajo_empleadoTecnico_empleadoTecnico_id",
+                        column: x => x.empleadoTecnico_id,
+                        principalTable: "empleadoTecnico",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_detalleTrabajo_ordenServicioTecnico_ordenServicioTecnico_id",
+                        column: x => x.ordenServicioTecnico_id,
+                        principalTable: "ordenServicioTecnico",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -463,13 +484,21 @@ namespace Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "productos",
-                columns: new[] { "id", "Imagen", "categoria_id", "descripcion", "garantia", "marca", "modelo", "precio", "stock" },
+                columns: new[] { "id", "categoria_id", "descripcion", "garantia", "imagen", "marca", "modelo", "precio", "stock" },
                 values: new object[,]
                 {
-                    { 1, null, 1, "Un audifono muy bueno para gamers", 1, "D234", "Ryzen", 88.50m, 3 },
-                    { 2, null, 6, "Un monitor muy bueno para gamers", null, "RGBH 24'", "Teros", 1200.00m, 23 },
-                    { 3, null, 1, "Un teclado muy bueno para gamers", 2, "70% Keys Blue", "ReDragon", 98.50m, 10 }
+                    { 1, 1, "Un audifono muy bueno para gamers", 1, null, "D234", "Ryzen", 88.50m, 3 },
+                    { 2, 6, "Un monitor muy bueno para gamers", null, null, "RGBH 24'", "Teros", 1200.00m, 23 },
+                    { 3, 1, "Un teclado muy bueno para gamers", 2, null, "70% Keys Blue", "ReDragon", 98.50m, 10 },
+                    { 4, 2, "Un mouse muy bueno para gamers", 2, null, "DS132-32", "Ryzen", 170.50m, 30 }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_clientes_user_id",
+                table: "clientes",
+                column: "user_id",
+                unique: true,
+                filter: "[user_id] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_delivery_estado_id",
@@ -633,6 +662,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "vendedores");
+
+            migrationBuilder.DropTable(
+                name: "users");
 
             migrationBuilder.DropTable(
                 name: "tipoPago");

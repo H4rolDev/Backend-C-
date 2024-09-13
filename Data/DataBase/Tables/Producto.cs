@@ -12,10 +12,9 @@ namespace Data.DataBase.Tables
         [Key]
         public int id { get; set; }
         [Required]
-        [StringLength(50)]
         public int categoria_id { get; set; }
-        [FileExtensions(Extensions = "jpg,png,gif")]
-        public string? Imagen { get; set; }
+        
+        public string? imagen { get; set; }
         [Required]
         [StringLength(50)]
         public string descripcion { get; set; }
