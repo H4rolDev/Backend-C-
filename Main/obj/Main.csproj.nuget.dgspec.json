@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Harol\\Desktop\\migraciones\\Innova\\main\\Main.csproj": {}
+    "C:\\Users\\Harol\\Desktop\\migraciones\\Innova\\Main\\Main.csproj": {}
   },
   "projects": {
     "C:\\Users\\Harol\\Desktop\\migraciones\\Innova\\Data\\Data.csproj": {
@@ -86,14 +86,14 @@
         }
       }
     },
-    "C:\\Users\\Harol\\Desktop\\migraciones\\Innova\\main\\Main.csproj": {
+    "C:\\Users\\Harol\\Desktop\\migraciones\\Innova\\Main\\Main.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Harol\\Desktop\\migraciones\\Innova\\main\\Main.csproj",
+        "projectUniqueName": "C:\\Users\\Harol\\Desktop\\migraciones\\Innova\\Main\\Main.csproj",
         "projectName": "Main",
-        "projectPath": "C:\\Users\\Harol\\Desktop\\migraciones\\Innova\\main\\Main.csproj",
+        "projectPath": "C:\\Users\\Harol\\Desktop\\migraciones\\Innova\\Main\\Main.csproj",
         "packagesPath": "C:\\Users\\Harol\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Harol\\Desktop\\migraciones\\Innova\\main\\obj\\",
+        "outputPath": "C:\\Users\\Harol\\Desktop\\migraciones\\Innova\\Main\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Harol\\AppData\\Roaming\\NuGet\\NuGet.Config",
