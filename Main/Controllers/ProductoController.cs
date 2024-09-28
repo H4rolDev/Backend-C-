@@ -2,6 +2,7 @@
 using Data.DataBase.Tables;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace Main.Controllers
 {
 
@@ -115,20 +116,36 @@ namespace Main.Controllers
             return NoContent(); //StatusCode 204
         }
 
+        [HttpGet("productos/categoria/{categoriaId}")]
+        public IActionResult GetProductosPorCategoria(int categoriaId)
+        {
+            var productos = _db.productos
+                .Where(p => p.categoria_id == categoriaId)
+                .ToList();
+            return Ok(productos);
+        }
+
         //Filtros
         [HttpGet]
         [Route("buscar")]
-        public IActionResult BuscarProductos(
-            [FromQuery] string? parametro,
-            [FromQuery] int categoria
-            )
+        public IActionResult BuscarProductos(string q)
         {
-            string v2 = parametro ?? ""; // Si es null se tomara el valor de la derecha osea vacio, eso evita los errores de los nulables
-            var productos = _db.productos.Where(
-            p => p.modelo.Contains(parametro)
-            && (categoria == 0 || p.categoria_id == categoria)
-            ).ToList();
-            return Ok(productos);
+            if (string.IsNullOrEmpty(q))
+        {
+            return BadRequest("El término de búsqueda no puede estar vacío");
+        }
+
+        // Supongamos que tienes una clase `Producto` y un contexto de base de datos `_context`
+        var productos = _db.productos
+            .Where(p => p.marca.Contains(q) || p.descripcion.Contains(q))
+            .ToList();
+
+        if (!productos.Any())
+        {
+            return NotFound("No se encontraron productos que coincidan con la búsqueda");
+        }
+
+        return Ok(productos);
         }
 
     }

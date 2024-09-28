@@ -16,13 +16,13 @@ namespace Data.DataBase.Tables
         
         public string? imagen { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(250)]
         public string descripcion { get; set; }
         [Required]
-        [StringLength(40)]
+        [StringLength(250)]
         public string modelo { get; set; }
         [Required]
-        [StringLength(40)]
+        [StringLength(250)]
         public string marca { get; set; }
         [Required]
         [Precision(7, 2)]

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial2 : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -153,9 +153,9 @@ namespace Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     categoria_id = table.Column<int>(type: "int", nullable: false),
                     imagen = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    descripcion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    modelo = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    marca = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    descripcion = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    modelo = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    marca = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     precio = table.Column<decimal>(type: "decimal(7,2)", precision: 7, scale: 2, nullable: false),
                     stock = table.Column<int>(type: "int", nullable: false),
                     garantia = table.Column<int>(type: "int", nullable: true)
@@ -476,7 +476,7 @@ namespace Data.Migrations
                 {
                     { 1, "Computadoras" },
                     { 2, "Laptops" },
-                    { 3, "Audifonos" },
+                    { 3, "Auriculares" },
                     { 4, "Teclado" },
                     { 5, "Componentes" },
                     { 6, "Monitores" }
@@ -487,10 +487,15 @@ namespace Data.Migrations
                 columns: new[] { "id", "categoria_id", "descripcion", "garantia", "imagen", "marca", "modelo", "precio", "stock" },
                 values: new object[,]
                 {
-                    { 1, 1, "Un audifono muy bueno para gamers", 1, null, "D234", "Ryzen", 88.50m, 3 },
-                    { 2, 6, "Un monitor muy bueno para gamers", null, null, "RGBH 24'", "Teros", 1200.00m, 23 },
-                    { 3, 1, "Un teclado muy bueno para gamers", 2, null, "70% Keys Blue", "ReDragon", 98.50m, 10 },
-                    { 4, 2, "Un mouse muy bueno para gamers", 2, null, "DS132-32", "Ryzen", 170.50m, 30 }
+                    { 1, 1, "B550M, SSD M.2 1TB, RAM 16GB", 2, "https://www.impacto.com.pe/storage/pc/sm/171570984947559.jpg", "AMD", "Ryzen 7 5700G", 3298.80m, 10 },
+                    { 2, 1, "Tarjeta de Video RTX 3050, SSD M.2 1TB, RAM 16GB", 2, "https://www.impacto.com.pe/storage/pc/md/171589130599320.jpg", "Intel", "Core I5 13400F", 2170.50m, 30 },
+                    { 3, 1, "Tarjeta de Video RTX 3060TI, SSD M.2 1TB, RAM 32GB", 2, "https://www.impacto.com.pe/storage/pc/sm/171570984947559.jpg", "AMD", "Ryzen 9 5900X", 4239.99m, 10 },
+                    { 4, 1, "Tarjeta de Video RTX 4060, SSD M.2 1TB, RAM 32GB", 2, "https://www.impacto.com.pe/storage/pc/sm/171570984947559.jpg", "AMD", "Ryzen 7 5700X", 4198.50m, 10 },
+                    { 5, 3, "Con Microfono, Control De Volumen, Almohadillas Suaves", 1, "https://www.impacto.com.pe/storage/pc/md/171572299747960.jpg", "Logitech", "Lightspeed Rgb G733 Gaming", 538.99m, 3 },
+                    { 6, 3, "Inalambrico, Con Microfono, Control De Volumen, Almohadillas Suaves", 1, "https://www.impacto.com.pe/storage/products/sm/169099476727139.jpg", "Logitech", "G Pro X Gaming", 638.99m, 3 },
+                    { 7, 3, "Inalambrico, Necro C/gris, Gaming Surrow 7.1, C/microfono, Entrada Jack", 1, "https://www.impacto.com.pe/storage/products/sm/168867107289840.jpg", "Gambyte ", "Dark Templar", 128.99m, 3 },
+                    { 8, 3, "Inalambrico, Necro C/gris, Gaming Surrow 7.1, C/microfono, Entrada Jack", 1, "https://www.impacto.com.pe/storage/products/sm/168867107289840.jpg", "Gambyte ", "Dark Templar", 128.99m, 3 },
+                    { 9, 6, "Color Negro, Gaming 5.1, Bluetooth 5.0, Con Microfono, Control De Volumen, Almohadillas Suaves", null, "https://www.impacto.com.pe/storage/products/sm/169099387290344.jpg", "Gambyte", "Soul", 120.99m, 23 }
                 });
 
             migrationBuilder.CreateIndex(

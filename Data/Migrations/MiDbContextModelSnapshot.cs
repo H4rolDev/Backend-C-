@@ -53,7 +53,7 @@ namespace Data.Migrations
                         new
                         {
                             id = 3,
-                            nombre = "Audifonos"
+                            nombre = "Auriculares"
                         },
                         new
                         {
@@ -436,8 +436,8 @@ namespace Data.Migrations
 
                     b.Property<string>("descripcion")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int?>("garantia")
                         .HasColumnType("int");
@@ -447,13 +447,13 @@ namespace Data.Migrations
 
                     b.Property<string>("marca")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("modelo")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<decimal>("precio")
                         .HasPrecision(7, 2)
@@ -473,44 +473,108 @@ namespace Data.Migrations
                         {
                             id = 1,
                             categoria_id = 1,
-                            descripcion = "Un audifono muy bueno para gamers",
-                            garantia = 1,
-                            marca = "D234",
-                            modelo = "Ryzen",
-                            precio = 88.50m,
-                            stock = 3
+                            descripcion = "B550M, SSD M.2 1TB, RAM 16GB",
+                            garantia = 2,
+                            imagen = "https://www.impacto.com.pe/storage/pc/sm/171570984947559.jpg",
+                            marca = "AMD",
+                            modelo = "Ryzen 7 5700G",
+                            precio = 3298.80m,
+                            stock = 10
                         },
                         new
                         {
                             id = 2,
-                            categoria_id = 6,
-                            descripcion = "Un monitor muy bueno para gamers",
-                            marca = "RGBH 24'",
-                            modelo = "Teros",
-                            precio = 1200.00m,
-                            stock = 23
+                            categoria_id = 1,
+                            descripcion = "Tarjeta de Video RTX 3050, SSD M.2 1TB, RAM 16GB",
+                            garantia = 2,
+                            imagen = "https://www.impacto.com.pe/storage/pc/md/171589130599320.jpg",
+                            marca = "Intel",
+                            modelo = "Core I5 13400F",
+                            precio = 2170.50m,
+                            stock = 30
                         },
                         new
                         {
                             id = 3,
                             categoria_id = 1,
-                            descripcion = "Un teclado muy bueno para gamers",
+                            descripcion = "Tarjeta de Video RTX 3060TI, SSD M.2 1TB, RAM 32GB",
                             garantia = 2,
-                            marca = "70% Keys Blue",
-                            modelo = "ReDragon",
-                            precio = 98.50m,
+                            imagen = "https://www.impacto.com.pe/storage/pc/sm/171570984947559.jpg",
+                            marca = "AMD",
+                            modelo = "Ryzen 9 5900X",
+                            precio = 4239.99m,
                             stock = 10
                         },
                         new
                         {
                             id = 4,
-                            categoria_id = 2,
-                            descripcion = "Un mouse muy bueno para gamers",
+                            categoria_id = 1,
+                            descripcion = "Tarjeta de Video RTX 4060, SSD M.2 1TB, RAM 32GB",
                             garantia = 2,
-                            marca = "DS132-32",
-                            modelo = "Ryzen",
-                            precio = 170.50m,
-                            stock = 30
+                            imagen = "https://www.impacto.com.pe/storage/pc/sm/171570984947559.jpg",
+                            marca = "AMD",
+                            modelo = "Ryzen 7 5700X",
+                            precio = 4198.50m,
+                            stock = 10
+                        },
+                        new
+                        {
+                            id = 5,
+                            categoria_id = 3,
+                            descripcion = "Con Microfono, Control De Volumen, Almohadillas Suaves",
+                            garantia = 1,
+                            imagen = "https://www.impacto.com.pe/storage/pc/md/171572299747960.jpg",
+                            marca = "Logitech",
+                            modelo = "Lightspeed Rgb G733 Gaming",
+                            precio = 538.99m,
+                            stock = 3
+                        },
+                        new
+                        {
+                            id = 6,
+                            categoria_id = 3,
+                            descripcion = "Inalambrico, Con Microfono, Control De Volumen, Almohadillas Suaves",
+                            garantia = 1,
+                            imagen = "https://www.impacto.com.pe/storage/products/sm/169099476727139.jpg",
+                            marca = "Logitech",
+                            modelo = "G Pro X Gaming",
+                            precio = 638.99m,
+                            stock = 3
+                        },
+                        new
+                        {
+                            id = 7,
+                            categoria_id = 3,
+                            descripcion = "Inalambrico, Necro C/gris, Gaming Surrow 7.1, C/microfono, Entrada Jack",
+                            garantia = 1,
+                            imagen = "https://www.impacto.com.pe/storage/products/sm/168867107289840.jpg",
+                            marca = "Gambyte ",
+                            modelo = "Dark Templar",
+                            precio = 128.99m,
+                            stock = 3
+                        },
+                        new
+                        {
+                            id = 8,
+                            categoria_id = 3,
+                            descripcion = "Inalambrico, Necro C/gris, Gaming Surrow 7.1, C/microfono, Entrada Jack",
+                            garantia = 1,
+                            imagen = "https://www.impacto.com.pe/storage/products/sm/168867107289840.jpg",
+                            marca = "Gambyte ",
+                            modelo = "Dark Templar",
+                            precio = 128.99m,
+                            stock = 3
+                        },
+                        new
+                        {
+                            id = 9,
+                            categoria_id = 6,
+                            descripcion = "Color Negro, Gaming 5.1, Bluetooth 5.0, Con Microfono, Control De Volumen, Almohadillas Suaves",
+                            imagen = "https://www.impacto.com.pe/storage/products/sm/169099387290344.jpg",
+                            marca = "Gambyte",
+                            modelo = "Soul",
+                            precio = 120.99m,
+                            stock = 23
                         });
                 });
 
