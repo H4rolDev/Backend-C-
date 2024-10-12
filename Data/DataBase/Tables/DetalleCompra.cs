@@ -12,19 +12,19 @@ namespace Data.DataBase.Tables
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [Required]
-        public string producto { get; set; }
-        [Required]
-        public DateTime fechaCompra { get; set; }
-        [Required]
         public int cantidadComprada { get; set; }
         [Required]
         [Precision(7, 2)]
-        public decimal precioUnitario { get; set; }
+        public decimal precioCosto { get; set; }
         [Required]
-        [Precision(8, 2)]
-        public decimal precioTotal { get; set; }
+        [Precision(7, 2)]
+        public decimal precioVenta { get; set; }
         [Required]
-        public int proveedor_id { get; set; }
-
+        public string porcentajeUtilidad { get; set; }
+        [Required]
+        public DateTime fechaVencimiento { get; set; }
+        public int id_compra { get; set; }
+        public int id_producto {get;set;}
+        
     }
 }

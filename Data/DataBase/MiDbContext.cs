@@ -23,169 +23,180 @@ namespace Data.DataBase
         {
             modelBuilder.Seed();
 
-            // Proveedor -> DetalleCompra | uno a muchos
-            modelBuilder.Entity<Proveedor>()
-                .HasOne<DetalleCompra>()
+            // Rol -> Usuario | uno a muchos
+            modelBuilder.Entity<Rol>()
+                .HasMany<Usuario>()
                 .WithOne()
-                .HasForeignKey<DetalleCompra>(u => u.proveedor_id)
+                .HasForeignKey(u => u.id_rol)
                 .IsRequired();
 
-            // TipoDocumento -> Documento | uno a muchos
-            modelBuilder.Entity<TipoDocumento>()
-                .HasOne<Documento>()
+            // EmpleadoTecnico -> OrdenServicioTecnico | uno a muchos
+            modelBuilder.Entity<EmpleadoTecnico>()
+                .HasMany<OrdenServicioTecnico>()
                 .WithOne()
-                .HasForeignKey<Documento>(p => p.tipoDocumento_id)
+                .HasForeignKey(u => u.id_empleadoTecnico)
                 .IsRequired();
 
-            // Categoria -> Producto | uno a muchos
-            modelBuilder.Entity<Categoria>()
-                .HasMany<Producto>()
-                .WithOne()
-                .HasForeignKey(u => u.categoria_id)
-                .IsRequired();
-
-            // Estado -> Delivery | uno a uno
-            modelBuilder.Entity<Estado>()
-                .HasOne<Delivery>()
-                .WithOne()
-                .HasForeignKey<Delivery>(u => u.estado_id)
-                .IsRequired();
-
-            // Estado -> RecojoAlmacen | uno a uno
-            modelBuilder.Entity<Estado>()
-                .HasOne<RecojoAlmacen>()
-                .WithOne()
-                .HasForeignKey<RecojoAlmacen>(u => u.estado_id)
-                .IsRequired();
-
-            // TipoEntrega -> Delivery | uno a uno
-            modelBuilder.Entity<TipoEntrega>()
-                .HasOne<Delivery>()
-                .WithOne()
-                .HasForeignKey<Delivery>(u => u.tipoEntrega_id)
-                .IsRequired();
-
-            // TipoEntrega -> RecojoAlmacen | uno a uno
-            modelBuilder.Entity<TipoEntrega>()
-                .HasOne<RecojoAlmacen>()
-                .WithOne()
-                .HasForeignKey<RecojoAlmacen>(u => u.tipoEntrega_id)
-                .IsRequired();
-
-            // DetalleVenta -> Devolucion | uno a uno
-            modelBuilder.Entity<DetalleVenta>()
-                .HasOne<Devolucion>()
-                .WithOne()
-                .HasForeignKey<Devolucion>(u => u.detalleVenta_id)
-                .IsRequired();
-
-            // Venta -> DetalleVenta | uno a muchos
-            modelBuilder.Entity<Venta>()
-                .HasMany<DetalleVenta>()
-                .WithOne()
-                .HasForeignKey(u => u.venta_id)
-                .IsRequired();
-
-            // Cliente -> RecojoAlmacen | uno a muchos
+            // Cliente - Usuario | uno a uno
             modelBuilder.Entity<Cliente>()
-                .HasMany<RecojoAlmacen>()
+                .HasOne<Usuario>()
                 .WithOne()
-                .HasForeignKey(u => u.cliente_id)
+                .HasForeignKey<Usuario>(u => u.id_cliente)
                 .IsRequired();
 
-            // Venta -> TipoEntrega | 
+            // Cliente -> OrdenServicioTecnico | uno a muchos
+            modelBuilder.Entity<Cliente>()
+                .HasMany<OrdenServicioTecnico>()
+                .WithOne()
+                .HasForeignKey(u => u.id_cliente)
+                .IsRequired();
+
+            // CLiente - Documento | uno a uno
+            modelBuilder.Entity<Documento>()
+                .HasOne<Cliente>()
+                .WithOne()
+                .HasForeignKey<Cliente>(u => u.id_documento)
+                .IsRequired();
             
+            // Cliente -> ClienteDireccion | uno a uno
+            modelBuilder.Entity<ClienteDireccion>()
+                .HasOne<Cliente>()
+                .WithOne()
+                .HasForeignKey<Cliente>(u => u.id_clienteDireccion)
+                .IsRequired();
+
             // Cliente -> Venta | uno a muchos
             modelBuilder.Entity<Cliente>()
                 .HasMany<Venta>()
                 .WithOne()
-                .HasForeignKey(u => u.cliente_id)
-                .IsRequired();
+                .HasForeignKey(u => u.id_cliente)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Vendedor -> Venta | uno a muchos
             modelBuilder.Entity<Vendedor>()
                 .HasMany<Venta>()
                 .WithOne()
-                .HasForeignKey(u => u.vendedor_id)
-                .IsRequired();
+                .HasForeignKey(u => u.id_vendedor)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Producto -> DetalleVenta | uno a muchos
-            modelBuilder.Entity<Producto>()
-                .HasMany<DetalleVenta>()
-                .WithOne()
-                .HasForeignKey(u => u.producto_id)
-                .IsRequired();
-
-            // MetodoPago -> Venta | uno a uno /dasdasdsaaaaaa alveres
-            modelBuilder.Entity<MetodoPago>()
-                .HasMany<Venta>()
-                .WithOne()
-                .HasForeignKey(u => u.metodoPago_id)
-                .IsRequired();
-
-            // TipoPago -> MetodoPago | uno a muchos 
+            // TipoPago -> Venta | uno a uno
             modelBuilder.Entity<TipoPago>()
-                .HasMany<MetodoPago>()
+                .HasOne<Venta>()
                 .WithOne()
-                .HasForeignKey(u => u.tipoPago_id)
-                .IsRequired();
+                .HasForeignKey<Venta>(u => u.id_tipoPago)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Cliente -> Documento | uno a muchos
-            modelBuilder.Entity<Cliente>()
-                .HasMany<Documento>()
+            // ClienteDireccion -> Delivery | uno a uno
+            modelBuilder.Entity<ClienteDireccion>()
+                .HasOne<Delivery>()
                 .WithOne()
-                .HasForeignKey(u => u.cliente_id)
-                .IsRequired();
+                .HasForeignKey<Delivery>(u => u.id_direccion)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Cliente -> OrdenServicioTecnico | uno a mucho
+            // Venta -> DetalleVenta | uno a uno
+            modelBuilder.Entity<Venta>()
+                .HasOne<DetalleVenta>()
+                .WithOne()
+                .HasForeignKey<DetalleVenta>(u => u.id_venta)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            // Cliente -> OrdenServicioTecnico | uno a muchos
             modelBuilder.Entity<Cliente>()
                 .HasMany<OrdenServicioTecnico>()
                 .WithOne()
-                .HasForeignKey(u => u.cliente_id)
+                .HasForeignKey(u => u.id_cliente)
+                .IsRequired();
+            
+            // Delivery -> Venta | uno a uno
+            modelBuilder.Entity<Delivery>()
+                .HasOne<Venta>()
+                .WithOne()
+                .HasForeignKey<Venta>(u => u.id_delivery)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // RecojoAlmacen -> Venta | uno a muchos
+            modelBuilder.Entity<RecojoAlmacen>()
+                .HasMany<Venta>()
+                .WithOne()
+                .HasForeignKey(u => u.id_recojoAlmacen)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Estado -> Delivery | uno a muchos
+            modelBuilder.Entity<Estado>()
+                .HasMany<Delivery>()
+                .WithOne()
+                .HasForeignKey(u => u.id_estado)
+                .IsRequired();
+            
+            // Productos -> DetalleVenta | uno a muchos
+            modelBuilder.Entity<Producto>()
+                .HasMany<DetalleVenta>()
+                .WithOne()
+                .HasForeignKey(u => u.id_producto)
                 .IsRequired();
 
-            // OrdenServicioTenico -> DetalleTrabajo | uno a muchos
-            modelBuilder.Entity<OrdenServicioTecnico>()
-                .HasMany<DetalleTrabajo>()
+            // Estado -> Compra | uno a muchos
+            modelBuilder.Entity<Estado>()
+                .HasMany<Compra>()
                 .WithOne()
-                .HasForeignKey(u => u.ordenServicioTecnico_id)
+                .HasForeignKey(u => u.id_estado)
                 .IsRequired();
 
-            // EmpleadoTecnico -> DetalleTrabajo | uno a muchos
-            modelBuilder.Entity<EmpleadoTecnico>()
-                .HasMany<DetalleTrabajo>()
+            // Proveedor -> Compra | uno a muchos
+            modelBuilder.Entity<Proveedor>()
+                .HasMany<Compra>()
                 .WithOne()
-                .HasForeignKey(u => u.empleadoTecnico_id)
+                .HasForeignKey(u => u.id_proveedor)
                 .IsRequired();
 
-            // Cliente -> User | uno a uno 
-            modelBuilder.Entity<User>()
-                .HasOne<Cliente>()
+            // Producto -> DetalleCompra | uno a muchos
+            modelBuilder.Entity<Producto>()
+                .HasMany<DetalleCompra>()
                 .WithOne()
-                .HasForeignKey<Cliente>(u => u.user_id)
-                .IsRequired(false);
-            /* un nuevo cliente sin un usuario, puedes simplemente dejar el campo UserId sin asignar (será null).
-            Si en el futuro decides asociar un cliente a un usuario, puedes actualizar el valor del campo UserId con el ID del usuario correspondiente. */
+                .HasForeignKey(u => u.id_producto)
+                .IsRequired();
+            
+            // TipoProducto -> Producto | uno a muchos
+
+            // Compra -> DetalleCOmpra | uno a muchos
+            modelBuilder.Entity<Compra>()
+                .HasMany<DetalleCompra>()
+                .WithOne()
+                .HasForeignKey(u => u.id_compra)
+                .IsRequired();
+
+            // TipoProducto -> Categoria | uno a muchos
+            modelBuilder.Entity<Categoria>()
+                .HasMany<Producto>()
+                .WithOne()
+                .HasForeignKey(u => u.id_categoria)
+                .IsRequired();
         }
-
         public DbSet<Categoria> categorias { get; set; }
         public DbSet<Cliente> clientes { get; set; }
+        public DbSet<ClienteDireccion> clienteDirecciones { get; set; }
+        public DbSet<Compra> compras { get; set; }
+        public DbSet<Delivery> deliverys { get; set; }
         public DbSet<DetalleCompra> detalleCompras { get; set; }
         public DbSet<DetalleVenta> detalleVentas { get; set; }
-        public DbSet<Devolucion> devoluciones { get; set; }
         public DbSet<Documento> documentos { get; set; }
         public DbSet<EmpleadoTecnico> empleadoTecnicos { get; set; }
         public DbSet<Estado> estados { get; set; }
-        public DbSet<MetodoPago> metodoPagos { get; set; }
         public DbSet<OrdenServicioTecnico> ordenServicioTecnicos { get; set; }
         public DbSet<Producto> productos { get; set; }
         public DbSet<Proveedor> proveedores { get; set; }
         public DbSet<RecojoAlmacen> recojoAlmacen { get; set; }
-        public DbSet<TipoDocumento> tipoDocumentos { get; set; }
-        public DbSet<TipoEntrega> tipoEntregas { get; set; }
+        public DbSet<Rol> roles { get; set; }
         public DbSet<TipoPago> tipoPagos { get; set; }
+        public DbSet<Usuario> usuarios { get; set; }
         public DbSet<Vendedor> vendedores { get; set; }
         public DbSet<Venta> ventas { get; set; }
-        public DbSet<User> users { get; set; }
     }
 }

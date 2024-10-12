@@ -138,3 +138,5 @@ C:\Users\Harol\Desktop\migraciones\Innova\Main\obj\Debug\net8.0\Main.pdb
 C:\Users\Harol\Desktop\migraciones\Innova\Main\obj\Debug\net8.0\Main.genruntimeconfig.cache
 C:\Users\Harol\Desktop\migraciones\Innova\Main\obj\Debug\net8.0\ref\Main.dll
 C:\Users\Harol\Desktop\migraciones\Innova\Main\obj\Debug\net8.0\Main.sourcelink.json
+C:\Users\Harol\Desktop\migraciones\Innova\Main\bin\Debug\net8.0\Business.dll
+C:\Users\Harol\Desktop\migraciones\Innova\Main\bin\Debug\net8.0\Business.pdb

@@ -13,7 +13,13 @@ namespace Data.DataBase.Tables
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [Required]
-        [Precision(8, 2)]
-        public decimal descripcion {get;set;}
+        public string descripcion {get;set;}
+        [Required]
+        public string nombres {get;set;}
+        [Required]
+        public string apellidos {get;set;}
+        [Required]
+        public int telefono {get;set;}
+        
     }
 }

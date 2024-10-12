@@ -5,21 +5,22 @@ using System.Runtime.CompilerServices;
 
 namespace Data.DataBase.Tables
 {
-    [Table("metodoPago")]
+    [Table("Compra")]
 
-    public class MetodoPago
+    public class Compra
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [Required]
-        [StringLength(50)]
-        public string nombre { get; set; }
+        public DateTime fechaCompra { get; set; }
         [Required]
-        [Phone]
-        public string telefono { get; set; }
+        public string metodoPago { get; set; }
         [Required]
-        public int tipoPago_id {get;set;}
-
+        public string idTipoDocEntrada { get; set; }
+        [Required]
+        public int nroDocEntrada { get; set; }
+        public int id_proveedor { get; set; }
+        public int id_estado { get; set; }
     }
 }

@@ -13,8 +13,6 @@ namespace Data.DataBase.Tables
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [Required]
-        public int producto_id{get;set;}
-        [Required]
         public int cantidad { get; set; }
         [Required]
         [Precision(7, 2)]
@@ -23,6 +21,8 @@ namespace Data.DataBase.Tables
         [Precision(7, 2)]
         public decimal impuestos { get; set; }
         [Required]
-        public int venta_id {get;set;}
+        public int id_producto{get;set;}
+        [Required]
+        public int id_venta {get;set;}
     }
 }

@@ -30,10 +30,12 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<bool>("estado")
+                        .HasColumnType("bit");
+
                     b.Property<string>("nombre")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
@@ -43,31 +45,37 @@ namespace Data.Migrations
                         new
                         {
                             id = 1,
+                            estado = false,
                             nombre = "Computadoras"
                         },
                         new
                         {
                             id = 2,
+                            estado = false,
                             nombre = "Laptops"
                         },
                         new
                         {
                             id = 3,
+                            estado = false,
                             nombre = "Auriculares"
                         },
                         new
                         {
                             id = 4,
+                            estado = false,
                             nombre = "Teclado"
                         },
                         new
                         {
                             id = 5,
+                            estado = false,
                             nombre = "Componentes"
                         },
                         new
                         {
                             id = 6,
+                            estado = false,
                             nombre = "Monitores"
                         });
                 });
@@ -80,40 +88,120 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("apellidoMaterno")
+                    b.Property<string>("Apellidos")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("apellidoPaterno")
+                    b.Property<string>("Nombres")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("RSocial")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("correo")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("id_clienteDireccion")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_documento")
+                        .HasColumnType("int");
 
                     b.Property<string>("telefono")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("user_id")
+                    b.HasKey("id");
+
+                    b.HasIndex("id_clienteDireccion")
+                        .IsUnique();
+
+                    b.HasIndex("id_documento")
+                        .IsUnique();
+
+                    b.ToTable("clientes");
+                });
+
+            modelBuilder.Entity("Data.DataBase.Tables.ClienteDireccion", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("departamento")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("direccion")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("distrito")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("provincia")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("referencia")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("clienteDireccion");
+                });
+
+            modelBuilder.Entity("Data.DataBase.Tables.Compra", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<DateTime>("fechaCompra")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("idTipoDocEntrada")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("id_estado")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_proveedor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("metodoPago")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("nroDocEntrada")
                         .HasColumnType("int");
 
                     b.HasKey("id");
 
-                    b.HasIndex("user_id")
-                        .IsUnique()
-                        .HasFilter("[user_id] IS NOT NULL");
+                    b.HasIndex("id_estado");
 
-                    b.ToTable("clientes");
+                    b.HasIndex("id_proveedor");
+
+                    b.ToTable("Compra");
                 });
 
             modelBuilder.Entity("Data.DataBase.Tables.Delivery", b =>
@@ -124,7 +212,7 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("ApellidoPaterno")
+                    b.Property<string>("Apellidos")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -138,16 +226,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Direccion")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("EmpresaEnvio")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -156,19 +234,18 @@ namespace Data.Migrations
                     b.Property<long>("Telefono")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("estado_id")
+                    b.Property<int>("id_direccion")
                         .HasColumnType("int");
 
-                    b.Property<int>("tipoEntrega_id")
+                    b.Property<int>("id_estado")
                         .HasColumnType("int");
 
                     b.HasKey("id");
 
-                    b.HasIndex("estado_id")
+                    b.HasIndex("id_direccion")
                         .IsUnique();
 
-                    b.HasIndex("tipoEntrega_id")
-                        .IsUnique();
+                    b.HasIndex("id_estado");
 
                     b.ToTable("delivery");
                 });
@@ -184,53 +261,34 @@ namespace Data.Migrations
                     b.Property<int>("cantidadComprada")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("fechaCompra")
+                    b.Property<DateTime>("fechaVencimiento")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("precioTotal")
-                        .HasPrecision(8, 2)
-                        .HasColumnType("decimal(8,2)");
+                    b.Property<int>("id_compra")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("precioUnitario")
-                        .HasPrecision(7, 2)
-                        .HasColumnType("decimal(7,2)");
+                    b.Property<int>("id_producto")
+                        .HasColumnType("int");
 
-                    b.Property<string>("producto")
+                    b.Property<string>("porcentajeUtilidad")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("proveedor_id")
-                        .HasColumnType("int");
+                    b.Property<decimal>("precioCosto")
+                        .HasPrecision(7, 2)
+                        .HasColumnType("decimal(7,2)");
+
+                    b.Property<decimal>("precioVenta")
+                        .HasPrecision(7, 2)
+                        .HasColumnType("decimal(7,2)");
 
                     b.HasKey("id");
 
-                    b.HasIndex("proveedor_id")
-                        .IsUnique();
+                    b.HasIndex("id_compra");
+
+                    b.HasIndex("id_producto");
 
                     b.ToTable("detalleCompra");
-                });
-
-            modelBuilder.Entity("Data.DataBase.Tables.DetalleTrabajo", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("empleadoTecnico_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ordenServicioTecnico_id")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("empleadoTecnico_id");
-
-                    b.HasIndex("ordenServicioTecnico_id");
-
-                    b.ToTable("detalleTrabajo");
                 });
 
             modelBuilder.Entity("Data.DataBase.Tables.DetalleVenta", b =>
@@ -244,6 +302,12 @@ namespace Data.Migrations
                     b.Property<int>("cantidad")
                         .HasColumnType("int");
 
+                    b.Property<int>("id_producto")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_venta")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("impuestos")
                         .HasPrecision(7, 2)
                         .HasColumnType("decimal(7,2)");
@@ -252,46 +316,14 @@ namespace Data.Migrations
                         .HasPrecision(7, 2)
                         .HasColumnType("decimal(7,2)");
 
-                    b.Property<int>("producto_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("venta_id")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
 
-                    b.HasIndex("producto_id");
+                    b.HasIndex("id_producto");
 
-                    b.HasIndex("venta_id");
-
-                    b.ToTable("detalleVenta");
-                });
-
-            modelBuilder.Entity("Data.DataBase.Tables.Devolucion", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("detalleVenta_id")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("fechaDevolucion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("motivoDevolucion")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("detalleVenta_id")
+                    b.HasIndex("id_venta")
                         .IsUnique();
 
-                    b.ToTable("devoluciones");
+                    b.ToTable("detalleVenta");
                 });
 
             modelBuilder.Entity("Data.DataBase.Tables.Documento", b =>
@@ -302,21 +334,17 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("cliente_id")
+                    b.Property<int>("longitudDocumento")
                         .HasColumnType("int");
 
-                    b.Property<int>("numeroDocumento")
-                        .HasColumnType("int");
+                    b.Property<string>("nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("tipoDocumento_id")
+                    b.Property<int>("nroDocumento")
                         .HasColumnType("int");
 
                     b.HasKey("id");
-
-                    b.HasIndex("cliente_id");
-
-                    b.HasIndex("tipoDocumento_id")
-                        .IsUnique();
 
                     b.ToTable("documentos");
                 });
@@ -329,20 +357,18 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("apellidoMaterno")
+                    b.Property<string>("apellidos")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("apellidoPaterno")
+                    b.Property<string>("nombres")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("salario")
+                        .HasColumnType("int");
 
                     b.Property<string>("telefono")
                         .IsRequired()
@@ -361,39 +387,17 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("estado")
-                        .HasColumnType("int");
+                    b.Property<string>("descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
                     b.ToTable("estados");
-                });
-
-            modelBuilder.Entity("Data.DataBase.Tables.MetodoPago", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<string>("nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("telefono")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("tipoPago_id")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("tipoPago_id");
-
-                    b.ToTable("metodoPago");
                 });
 
             modelBuilder.Entity("Data.DataBase.Tables.OrdenServicioTecnico", b =>
@@ -404,10 +408,14 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("cliente_id")
-                        .HasColumnType("int");
+                    b.Property<string>("descripcionServicio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("fecha")
+                    b.Property<DateTime>("fechaFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("fechaInicio")
                         .HasColumnType("datetime2");
 
                     b.Property<TimeSpan>("horaFin")
@@ -416,9 +424,23 @@ namespace Data.Migrations
                     b.Property<TimeSpan>("horaInicio")
                         .HasColumnType("time");
 
+                    b.Property<int>("id_cliente")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_empleadoTecnico")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("precioUnitario")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("total")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("id");
 
-                    b.HasIndex("cliente_id");
+                    b.HasIndex("id_cliente");
+
+                    b.HasIndex("id_empleadoTecnico");
 
                     b.ToTable("ordenServicioTecnico");
                 });
@@ -431,8 +453,8 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("categoria_id")
-                        .HasColumnType("int");
+                    b.Property<string>("UltPorcUtilidad")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("descripcion")
                         .IsRequired()
@@ -440,6 +462,9 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<int?>("garantia")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_categoria")
                         .HasColumnType("int");
 
                     b.Property<string>("imagen")
@@ -455,16 +480,15 @@ namespace Data.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<decimal>("precio")
-                        .HasPrecision(7, 2)
-                        .HasColumnType("decimal(7,2)");
+                    b.Property<decimal>("precioVenta")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("stock")
                         .HasColumnType("int");
 
                     b.HasKey("id");
 
-                    b.HasIndex("categoria_id");
+                    b.HasIndex("id_categoria");
 
                     b.ToTable("productos");
 
@@ -472,108 +496,108 @@ namespace Data.Migrations
                         new
                         {
                             id = 1,
-                            categoria_id = 1,
                             descripcion = "B550M, SSD M.2 1TB, RAM 16GB",
                             garantia = 2,
+                            id_categoria = 1,
                             imagen = "https://www.impacto.com.pe/storage/pc/sm/171570984947559.jpg",
                             marca = "AMD",
                             modelo = "Ryzen 7 5700G",
-                            precio = 3298.80m,
+                            precioVenta = 3298.80m,
                             stock = 10
                         },
                         new
                         {
                             id = 2,
-                            categoria_id = 1,
                             descripcion = "Tarjeta de Video RTX 3050, SSD M.2 1TB, RAM 16GB",
                             garantia = 2,
+                            id_categoria = 1,
                             imagen = "https://www.impacto.com.pe/storage/pc/md/171589130599320.jpg",
                             marca = "Intel",
                             modelo = "Core I5 13400F",
-                            precio = 2170.50m,
+                            precioVenta = 2170.50m,
                             stock = 30
                         },
                         new
                         {
                             id = 3,
-                            categoria_id = 1,
                             descripcion = "Tarjeta de Video RTX 3060TI, SSD M.2 1TB, RAM 32GB",
                             garantia = 2,
+                            id_categoria = 1,
                             imagen = "https://www.impacto.com.pe/storage/pc/sm/171570984947559.jpg",
                             marca = "AMD",
                             modelo = "Ryzen 9 5900X",
-                            precio = 4239.99m,
+                            precioVenta = 4239.99m,
                             stock = 10
                         },
                         new
                         {
                             id = 4,
-                            categoria_id = 1,
                             descripcion = "Tarjeta de Video RTX 4060, SSD M.2 1TB, RAM 32GB",
                             garantia = 2,
+                            id_categoria = 1,
                             imagen = "https://www.impacto.com.pe/storage/pc/sm/171570984947559.jpg",
                             marca = "AMD",
                             modelo = "Ryzen 7 5700X",
-                            precio = 4198.50m,
+                            precioVenta = 4198.50m,
                             stock = 10
                         },
                         new
                         {
                             id = 5,
-                            categoria_id = 3,
                             descripcion = "Con Microfono, Control De Volumen, Almohadillas Suaves",
                             garantia = 1,
+                            id_categoria = 3,
                             imagen = "https://www.impacto.com.pe/storage/pc/md/171572299747960.jpg",
                             marca = "Logitech",
                             modelo = "Lightspeed Rgb G733 Gaming",
-                            precio = 538.99m,
+                            precioVenta = 538.99m,
                             stock = 3
                         },
                         new
                         {
                             id = 6,
-                            categoria_id = 3,
                             descripcion = "Inalambrico, Con Microfono, Control De Volumen, Almohadillas Suaves",
                             garantia = 1,
+                            id_categoria = 3,
                             imagen = "https://www.impacto.com.pe/storage/products/sm/169099476727139.jpg",
                             marca = "Logitech",
                             modelo = "G Pro X Gaming",
-                            precio = 638.99m,
+                            precioVenta = 638.99m,
                             stock = 3
                         },
                         new
                         {
                             id = 7,
-                            categoria_id = 3,
                             descripcion = "Inalambrico, Necro C/gris, Gaming Surrow 7.1, C/microfono, Entrada Jack",
                             garantia = 1,
+                            id_categoria = 3,
                             imagen = "https://www.impacto.com.pe/storage/products/sm/168867107289840.jpg",
                             marca = "Gambyte ",
                             modelo = "Dark Templar",
-                            precio = 128.99m,
+                            precioVenta = 128.99m,
                             stock = 3
                         },
                         new
                         {
                             id = 8,
-                            categoria_id = 3,
                             descripcion = "Inalambrico, Necro C/gris, Gaming Surrow 7.1, C/microfono, Entrada Jack",
                             garantia = 1,
+                            id_categoria = 3,
                             imagen = "https://www.impacto.com.pe/storage/products/sm/168867107289840.jpg",
                             marca = "Gambyte ",
                             modelo = "Dark Templar",
-                            precio = 128.99m,
+                            precioVenta = 128.99m,
                             stock = 3
                         },
                         new
                         {
                             id = 9,
-                            categoria_id = 6,
                             descripcion = "Color Negro, Gaming 5.1, Bluetooth 5.0, Con Microfono, Control De Volumen, Almohadillas Suaves",
+                            id_categoria = 6,
                             imagen = "https://www.impacto.com.pe/storage/products/sm/169099387290344.jpg",
                             marca = "Gambyte",
                             modelo = "Soul",
-                            precio = 120.99m,
+                            precioVenta = 120.99m,
                             stock = 23
                         });
                 });
@@ -586,29 +610,28 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("apellidoMaterno")
+                    b.Property<string>("RSocial")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("apellidoPaterno")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                    b.Property<int>("RUC")
+                        .HasColumnType("int");
 
                     b.Property<string>("correo")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("telefono")
+                    b.Property<string>("nombreContacto")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("telefono")
+                        .HasColumnType("int");
+
+                    b.Property<int>("telefonoContacto")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
 
@@ -623,72 +646,57 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("cliente_id")
-                        .HasColumnType("int");
+                    b.Property<string>("apellidos")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("correo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("dni")
                         .IsRequired()
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
 
-                    b.Property<int>("estado_id")
-                        .HasColumnType("int");
+                    b.Property<string>("nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("telefono")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("tipoEntrega_id")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
-
-                    b.HasIndex("cliente_id");
-
-                    b.HasIndex("estado_id")
-                        .IsUnique();
-
-                    b.HasIndex("tipoEntrega_id")
-                        .IsUnique();
 
                     b.ToTable("recojoAlmacen");
                 });
 
-            modelBuilder.Entity("Data.DataBase.Tables.TipoDocumento", b =>
+            modelBuilder.Entity("Data.DataBase.Tables.Rol", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nombre")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
-                    b.ToTable("tipoDocumentos");
-                });
-
-            modelBuilder.Entity("Data.DataBase.Tables.TipoEntrega", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("horaFecha")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("id");
-
-                    b.ToTable("tipoEntrega");
+                    b.ToTable("Rol");
                 });
 
             modelBuilder.Entity("Data.DataBase.Tables.TipoPago", b =>
@@ -699,16 +707,27 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<decimal>("descripcion")
-                        .HasPrecision(8, 2)
-                        .HasColumnType("decimal(8,2)");
+                    b.Property<string>("apellidos")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nombres")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("telefono")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
 
                     b.ToTable("tipoPago");
                 });
 
-            modelBuilder.Entity("Data.DataBase.Tables.User", b =>
+            modelBuilder.Entity("Data.DataBase.Tables.Usuario", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -716,20 +735,32 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("Email")
+                    b.Property<string>("clave")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("correo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("estado")
+                        .HasMaxLength(128)
+                        .HasColumnType("bit");
+
+                    b.Property<int>("id_cliente")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_rol")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
+
+                    b.HasIndex("id_cliente")
+                        .IsUnique();
+
+                    b.HasIndex("id_rol");
 
                     b.ToTable("users");
                 });
@@ -760,9 +791,8 @@ namespace Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("puesto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("salario")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("telefono")
                         .IsRequired()
@@ -781,85 +811,101 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("cliente_id")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("fechaCompra")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("metodoEntrega")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("metodoPago_id")
+                    b.Property<int>("id_cliente")
                         .HasColumnType("int");
 
-                    b.Property<string>("productos")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("id_delivery")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_recojoAlmacen")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_tipoPago")
+                        .HasColumnType("int");
+
+                    b.Property<int>("id_vendedor")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("totalVenta")
                         .HasPrecision(7, 2)
                         .HasColumnType("decimal(7,2)");
 
-                    b.Property<int>("vendedor_id")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
 
-                    b.HasIndex("cliente_id");
+                    b.HasIndex("id_cliente");
 
-                    b.HasIndex("metodoPago_id");
+                    b.HasIndex("id_delivery")
+                        .IsUnique();
 
-                    b.HasIndex("vendedor_id");
+                    b.HasIndex("id_recojoAlmacen");
+
+                    b.HasIndex("id_tipoPago")
+                        .IsUnique();
+
+                    b.HasIndex("id_vendedor");
 
                     b.ToTable("ventas");
                 });
 
             modelBuilder.Entity("Data.DataBase.Tables.Cliente", b =>
                 {
-                    b.HasOne("Data.DataBase.Tables.User", null)
+                    b.HasOne("Data.DataBase.Tables.ClienteDireccion", null)
                         .WithOne()
-                        .HasForeignKey("Data.DataBase.Tables.Cliente", "user_id");
+                        .HasForeignKey("Data.DataBase.Tables.Cliente", "id_clienteDireccion")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.DataBase.Tables.Documento", null)
+                        .WithOne()
+                        .HasForeignKey("Data.DataBase.Tables.Cliente", "id_documento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Data.DataBase.Tables.Compra", b =>
+                {
+                    b.HasOne("Data.DataBase.Tables.Estado", null)
+                        .WithMany()
+                        .HasForeignKey("id_estado")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.DataBase.Tables.Proveedor", null)
+                        .WithMany()
+                        .HasForeignKey("id_proveedor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Data.DataBase.Tables.Delivery", b =>
                 {
-                    b.HasOne("Data.DataBase.Tables.Estado", null)
+                    b.HasOne("Data.DataBase.Tables.ClienteDireccion", null)
                         .WithOne()
-                        .HasForeignKey("Data.DataBase.Tables.Delivery", "estado_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("Data.DataBase.Tables.Delivery", "id_direccion")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Data.DataBase.Tables.TipoEntrega", null)
-                        .WithOne()
-                        .HasForeignKey("Data.DataBase.Tables.Delivery", "tipoEntrega_id")
+                    b.HasOne("Data.DataBase.Tables.Estado", null)
+                        .WithMany()
+                        .HasForeignKey("id_estado")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Data.DataBase.Tables.DetalleCompra", b =>
                 {
-                    b.HasOne("Data.DataBase.Tables.Proveedor", null)
-                        .WithOne()
-                        .HasForeignKey("Data.DataBase.Tables.DetalleCompra", "proveedor_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Data.DataBase.Tables.DetalleTrabajo", b =>
-                {
-                    b.HasOne("Data.DataBase.Tables.EmpleadoTecnico", null)
+                    b.HasOne("Data.DataBase.Tables.Compra", null)
                         .WithMany()
-                        .HasForeignKey("empleadoTecnico_id")
+                        .HasForeignKey("id_compra")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.DataBase.Tables.OrdenServicioTecnico", null)
+                    b.HasOne("Data.DataBase.Tables.Producto", null)
                         .WithMany()
-                        .HasForeignKey("ordenServicioTecnico_id")
+                        .HasForeignKey("id_producto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -868,47 +914,14 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.DataBase.Tables.Producto", null)
                         .WithMany()
-                        .HasForeignKey("producto_id")
+                        .HasForeignKey("id_producto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.DataBase.Tables.Venta", null)
-                        .WithMany()
-                        .HasForeignKey("venta_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Data.DataBase.Tables.Devolucion", b =>
-                {
-                    b.HasOne("Data.DataBase.Tables.DetalleVenta", null)
                         .WithOne()
-                        .HasForeignKey("Data.DataBase.Tables.Devolucion", "detalleVenta_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Data.DataBase.Tables.Documento", b =>
-                {
-                    b.HasOne("Data.DataBase.Tables.Cliente", null)
-                        .WithMany()
-                        .HasForeignKey("cliente_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.DataBase.Tables.TipoDocumento", null)
-                        .WithOne()
-                        .HasForeignKey("Data.DataBase.Tables.Documento", "tipoDocumento_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Data.DataBase.Tables.MetodoPago", b =>
-                {
-                    b.HasOne("Data.DataBase.Tables.TipoPago", null)
-                        .WithMany()
-                        .HasForeignKey("tipoPago_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("Data.DataBase.Tables.DetalleVenta", "id_venta")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -916,7 +929,13 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.DataBase.Tables.Cliente", null)
                         .WithMany()
-                        .HasForeignKey("cliente_id")
+                        .HasForeignKey("id_cliente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.DataBase.Tables.EmpleadoTecnico", null)
+                        .WithMany()
+                        .HasForeignKey("id_empleadoTecnico")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -925,28 +944,22 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.DataBase.Tables.Categoria", null)
                         .WithMany()
-                        .HasForeignKey("categoria_id")
+                        .HasForeignKey("id_categoria")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Data.DataBase.Tables.RecojoAlmacen", b =>
+            modelBuilder.Entity("Data.DataBase.Tables.Usuario", b =>
                 {
                     b.HasOne("Data.DataBase.Tables.Cliente", null)
+                        .WithOne()
+                        .HasForeignKey("Data.DataBase.Tables.Usuario", "id_cliente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.DataBase.Tables.Rol", null)
                         .WithMany()
-                        .HasForeignKey("cliente_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.DataBase.Tables.Estado", null)
-                        .WithOne()
-                        .HasForeignKey("Data.DataBase.Tables.RecojoAlmacen", "estado_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.DataBase.Tables.TipoEntrega", null)
-                        .WithOne()
-                        .HasForeignKey("Data.DataBase.Tables.RecojoAlmacen", "tipoEntrega_id")
+                        .HasForeignKey("id_rol")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -955,20 +968,32 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.DataBase.Tables.Cliente", null)
                         .WithMany()
-                        .HasForeignKey("cliente_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("id_cliente")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Data.DataBase.Tables.MetodoPago", null)
+                    b.HasOne("Data.DataBase.Tables.Delivery", null)
+                        .WithOne()
+                        .HasForeignKey("Data.DataBase.Tables.Venta", "id_delivery")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Data.DataBase.Tables.RecojoAlmacen", null)
                         .WithMany()
-                        .HasForeignKey("metodoPago_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("id_recojoAlmacen")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Data.DataBase.Tables.TipoPago", null)
+                        .WithOne()
+                        .HasForeignKey("Data.DataBase.Tables.Venta", "id_tipoPago")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Data.DataBase.Tables.Vendedor", null)
                         .WithMany()
-                        .HasForeignKey("vendedor_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("id_vendedor")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

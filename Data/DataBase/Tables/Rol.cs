@@ -6,17 +6,17 @@ using System.Runtime.CompilerServices;
 namespace Data.DataBase.Tables
 {
 
-    [Table("users")]
-    public class User
+    [Table("Rol")]
+    public class Rol
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [Required]
-        public string PasswordHash { get; set; } 
-
+        public string nombre { get; set; }
         [Required]
-        [StringLength(255)]
-        public string Email { get; set; }
-        public string Role { get; set; }
+        public string descripcion { get; set; }
+        [Required]
+        public string estado { get; set; }
     }
 }

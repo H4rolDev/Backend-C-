@@ -16,13 +16,15 @@ namespace Data.DataBase.Tables
         [StringLength(12)]
         public string dni { get; set; }
         [Required]
+        [StringLength(100)]
+        public string nombre { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string apellidos { get; set; }
+        [Required]
         [Phone]
         public string telefono { get; set; }
         [Required]
-        public int tipoEntrega_id { get; set; }
-        [Required]
-        public int estado_id { get; set; }
-        [Required]
-        public int cliente_id { get; set; }
+        public string correo { get; set; }
     }
 }

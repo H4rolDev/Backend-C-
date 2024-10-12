@@ -5,12 +5,6 @@ using System.Runtime.CompilerServices;
 
 namespace Data.DataBase.Tables
 {
-    public enum enumEstados
-    {
-        Inicio,
-        EnProceso,
-        Finalizado
-    }
 
     [Table("estados")]
     public class Estado
@@ -19,7 +13,9 @@ namespace Data.DataBase.Tables
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [Required]
-        public enumEstados estado { get; set; }
+        public string nombre {get; set; }
+        [Required]
+        public string descripcion { get; set; }
         
         
     }

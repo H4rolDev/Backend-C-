@@ -1,4 +1,10 @@
-﻿using Data.DataBase;
+﻿using Bussines.Auth.repositories;
+using Bussines.Auth.services;
+using Bussines.Store.repositories;
+using Bussines.Store.services;
+
+using Data.DataBase;
+
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,7 +41,7 @@ string con = "Data Source=DESKTOP-M04GFAI\\sqlexpress;Initial Catalog=Innova;Int
 builder.Services.AddDbContext<MiDbContext>(
     conf => conf.UseSqlServer(
         con, 
-        b => b.MigrationsAssembly("Data"))            
+        b => b.MigrationsAssembly("Main"))            
     ) ;
 
 var app = builder.Build();
@@ -60,6 +66,26 @@ app.Use(async (context, next) =>
         throw;
     }
 });
+
+// Inyeccion de dependencias
+// services
+builder.Services.AddScoped<IRolService, RolServiceDbImpl>();
+builder.Services.AddScoped<IAppUserService, AppUserDbImpl>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationServiceDbImpl>();
+builder.Services.AddScoped<ICategoryService, CategoryServiceDbImpl>();
+builder.Services.AddScoped<IProductService, ProductServiceDbImpl>();
+// repositories
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepositryImpl>();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+//}
 
 // app.UseHttpsRedirection();
 

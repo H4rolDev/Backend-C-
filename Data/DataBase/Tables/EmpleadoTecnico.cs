@@ -13,14 +13,13 @@ namespace Data.DataBase.Tables
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [Required]
-        [StringLength(50)]
-        public string nombre { get; set; }
+        [StringLength(100)]
+        public string nombres { get; set; }
         [Required]
-        [StringLength(25)]
-        public string apellidoPaterno { get; set; }
-        [Required]
-        [StringLength(25)]
-        public string apellidoMaterno { get; set; }
+        [StringLength(100)]
+        public string apellidos { get; set; }
+  
+        public int salario { get; set; }
         [Required]
         [Phone]
         public string telefono { get; set; }       

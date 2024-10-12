@@ -13,10 +13,10 @@ namespace Data.DataBase.Tables
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [Required]
-        public int numeroDocumento{get; set; }
+        public string nombre{get; set; }
         [Required]
-        public int tipoDocumento_id { get; set; } 
+        public int longitudDocumento { get; set; } 
         [Required]
-        public int cliente_id {get; set;}
+        public int nroDocumento {get; set;}
     }
 }

@@ -14,20 +14,18 @@ namespace Data.DataBase.Tables
         public int id { get; set; }
         [Required]
         [StringLength(50)]
-        public string nombre { get; set; }
+        public string RSocial { get; set; }
         [Required]
-        [StringLength(25)]
-        public string apellidoPaterno { get; set; }
-        [Required]
-        [StringLength(25)]
-        public string apellidoMaterno { get; set; }
+        public int RUC { get; set; }
         [Required]
         [Phone]
-        public string telefono { get; set; }
+        public int telefono { get; set; }
         [Required]
         [StringLength(50)]
         [EmailAddress]
         public string correo { get; set; }
-        
+        public string nombreContacto { get; set; }   
+        public int telefonoContacto { get; set; }
+
     }
 }

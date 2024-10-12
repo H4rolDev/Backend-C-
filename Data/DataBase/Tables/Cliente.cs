@@ -13,21 +13,23 @@ namespace Data.DataBase.Tables
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [Required]
-        [StringLength(50)]
-        public string name { get; set; }
+        [StringLength(100)]
+        public string RSocial { get; set; }
         [Required]
-        [StringLength(25)]
-        public string apellidoPaterno { get; set; }
+        [StringLength(100)]
+        public string Nombres { get; set; }
         [Required]
-        [StringLength(25)]
-        public string apellidoMaterno { get; set; }
+        [StringLength(100)]
+        public string Apellidos { get; set; }
         [Required]
         [Phone]
         public string telefono { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(100)]
         [EmailAddress]
         public string correo { get; set; }
-        public int? user_id { get; set; }
+        public int id_documento { get; set; }
+        public int id_clienteDireccion { get; set; }
+
     }
 }

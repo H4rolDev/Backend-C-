@@ -11,8 +11,8 @@ namespace Data.DataBase.Tables
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [Required]
-        [StringLength(50)]
         public string nombre { get; set; }
-        
+        [Required]
+        public bool estado { get; set; }
     }
 }

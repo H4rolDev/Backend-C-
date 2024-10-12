@@ -21,11 +21,11 @@ namespace Data.DataBase.Tables
         [Required]
         [StringLength(25)]
         public string apellidoMaterno { get; set; }
+        public DateTime fechaContratacion { get; set; }
+        [Required]
+        public decimal salario { get; set; }
         [Required]
         [Phone]
         public string telefono { get; set; }
-        public DateTime fechaContratacion { get; set; }
-        public string puesto { get; set; }
-
     }
 }

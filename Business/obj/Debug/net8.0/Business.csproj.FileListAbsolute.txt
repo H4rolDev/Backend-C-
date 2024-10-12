@@ -1,0 +1,15 @@
+C:\Users\Harol\Desktop\migraciones\Innova\Business\bin\Debug\net8.0\Business.deps.json
+C:\Users\Harol\Desktop\migraciones\Innova\Business\bin\Debug\net8.0\Business.dll
+C:\Users\Harol\Desktop\migraciones\Innova\Business\bin\Debug\net8.0\Business.pdb
+C:\Users\Harol\Desktop\migraciones\Innova\Business\obj\Debug\net8.0\Business.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Harol\Desktop\migraciones\Innova\Business\obj\Debug\net8.0\Business.AssemblyInfoInputs.cache
+C:\Users\Harol\Desktop\migraciones\Innova\Business\obj\Debug\net8.0\Business.AssemblyInfo.cs
+C:\Users\Harol\Desktop\migraciones\Innova\Business\obj\Debug\net8.0\Business.csproj.CoreCompileInputs.cache
+C:\Users\Harol\Desktop\migraciones\Innova\Business\obj\Debug\net8.0\Business.sourcelink.json
+C:\Users\Harol\Desktop\migraciones\Innova\Business\obj\Debug\net8.0\Business.dll
+C:\Users\Harol\Desktop\migraciones\Innova\Business\obj\Debug\net8.0\refint\Business.dll
+C:\Users\Harol\Desktop\migraciones\Innova\Business\obj\Debug\net8.0\Business.pdb
+C:\Users\Harol\Desktop\migraciones\Innova\Business\obj\Debug\net8.0\ref\Business.dll
+C:\Users\Harol\Desktop\migraciones\Innova\Business\bin\Debug\net8.0\Business.runtimeconfig.json
+C:\Users\Harol\Desktop\migraciones\Innova\Business\obj\Debug\net8.0\Business.csproj.AssemblyReference.cache
+C:\Users\Harol\Desktop\migraciones\Innova\Business\obj\Debug\net8.0\Business.genruntimeconfig.cache
